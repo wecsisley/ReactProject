@@ -1,0 +1,8 @@
+server:
+  servlet:
+    context-path: /church
+
+spring:
+  data:
+    mongodb:
+      database: members
