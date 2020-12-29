@@ -1,8 +1,8 @@
 package br.com.saas.church.controllers;
 
 import br.com.saas.church.dtos.MemberDTO;
-import br.com.saas.church.models.Member;
 import br.com.saas.church.services.MemberService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,18 +18,23 @@ public class MemberController {
     }
 
     @GetMapping
-    public List<MemberDTO> findAll() {
+    public ResponseEntity<List<MemberDTO>> findAll() {
         return memberService.getall();
     }
 
-    @PostMapping
-    public void create(@RequestBody Member member) {
-        memberService.create(member);
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<MemberDTO> findById(@PathVariable String id) {
+        return memberService.getById(id);
     }
 
-    @PutMapping
-    public void update(@RequestBody Member member) {
-        memberService.update(member);
+    @PostMapping
+    public ResponseEntity create(@RequestBody MemberDTO memberDTO) {
+        return memberService.create(memberDTO);
+    }
+
+    @PutMapping(value = "/{id}")
+    public void update(@PathVariable String id, @RequestBody MemberDTO memberDTO) {
+        memberService.updateById(id, memberDTO);
     }
 
     @DeleteMapping(value = "/{id}")
