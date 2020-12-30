@@ -73,10 +73,10 @@ public class MemberService {
             log.info("Trying to convert memberDTO in member");
             Member member = modelMapper.map(memberDTO, Member.class);
             log.info("Sucessful conversion !");
+            log.info("Trying save member in database");
+            memberRepository.save(member);
+            log.info("Member save in database");
             if (member.getId() != null) {
-                log.info("Trying save member in database");
-                memberRepository.save(member);
-                log.info("Member save in database");
                 log.info("MemberDTO created with sucess");
                 log.info("Trying to convert member in memberDTO");
                 memberDTO = modelMapper.map(member, MemberDTO.class);
