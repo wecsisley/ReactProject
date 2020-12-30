@@ -6,3 +6,4 @@ IDE: IntelliJ Community Edition 2020.3
 Database: MongoDB version 4.4.2
 MongoClient: Robo 3T 1.4.2
 Tools: Postman, draw.io
+Trello: https://trello.com/b/5LIRNWCU/project-church
