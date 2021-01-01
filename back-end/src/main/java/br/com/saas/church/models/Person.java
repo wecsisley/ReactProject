@@ -1,20 +1,34 @@
 package br.com.saas.church.models;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
 public class Person {
 
+    @NotEmpty(message = "Name must not be empty")
     protected String name;
+    @NotEmpty(message = "CPF must not be empty")
     protected String cpf;
+    @NotEmpty(message = "Birth Date must not be empty")
     protected String birthDate;
+    @NotEmpty(message = "Gender must not be empty")
     protected String gender;
+    @Email
     protected String email;
     protected String telephone;
+    @NotEmpty(message = "Cep must not be empty")
     protected String cep;
+    @NotEmpty(message = "Address must not be empty")
     protected String address;
     protected String number;
     protected String complement;
+    @NotEmpty(message = "Neighborhood must not be empty")
     protected String neighborhood;
+    @NotEmpty(message = "City must not be empty")
     protected String city;
+    @NotEmpty(message = "State must not be empty")
     protected String state;
+    @NotEmpty(message = "Country must not be empty")
     protected String country;
     protected String bloodType;
 

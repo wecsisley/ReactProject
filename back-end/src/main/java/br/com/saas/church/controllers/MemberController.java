@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -33,7 +34,7 @@ public class MemberController {
 
 
     @PostMapping
-    public ResponseEntity create(@RequestBody MemberDTO memberDTO) {
+    public ResponseEntity create(@Valid @RequestBody MemberDTO memberDTO) {
         log.info("Trying access memberService");
         return memberService.create(memberDTO);
     }

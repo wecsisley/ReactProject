@@ -1,15 +1,16 @@
 package br.com.saas.church.handler;
 
-import br.com.saas.church.errors.InvalidIdDetails;
-import br.com.saas.church.errors.InvalidIdException;
-import br.com.saas.church.errors.ResourceNotFoundDetails;
-import br.com.saas.church.errors.ResourceNotFoundException;
+import br.com.saas.church.errors.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class RestExceptionHandler {
@@ -25,6 +26,24 @@ public class RestExceptionHandler {
                 .developerMessage(rfnException.getClass().getName())
                 .build();
         return new ResponseEntity<>(rnfDetails, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException manvException) {
+        List<FieldError> fieldErrorList = manvException.getBindingResult().getFieldErrors();
+        String field = fieldErrorList.stream().map(FieldError::getField).collect(Collectors.joining(","));
+        String fieldMessages = fieldErrorList.stream().map(FieldError::getDefaultMessage).collect(Collectors.joining(","));
+        ValidationErrorDetails veDetails = ValidationErrorDetails.Builder
+                .newBuilder()
+                .timestamp(new Date().getTime())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .title("Field Validation Error")
+                .detail("Field Validation Error")
+                .developerMessage(manvException.getClass().getName())
+                .field(field)
+                .fildMessage(fieldMessages)
+                .build();
+        return new ResponseEntity<>(veDetails, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(InvalidIdException.class)
